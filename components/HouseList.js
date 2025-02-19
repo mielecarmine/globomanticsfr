@@ -1,12 +1,42 @@
+import { useState } from "react";
 import HouseRow from "./HouseRow";
+import { useEffect } from "react";
+
+const housesArray = [
+];
+
+
 
 export default function HouseList() {
+  const [houses, setHouses] = useState(housesArray);
+  
+  useEffect(() => {
+    fetch('/houses.json') // il percorso relativo al file JSON nella cartella `public`
+      .then((response) => response.json()) // converte la risposta in formato JSON
+      .then((data) => setHouses(data)) // imposta i dati nel nostro array di oggetti
+      .catch((error) => console.error('Errore nel caricare i dati:', error)); // gestisce eventuali errori
+  }, []);
+
+  function addHouse() {
+    setHouses([
+      ...houses,
+      {
+        id: 4,
+        address: "Meel Kade 321, The Hague",
+        country: "The Netherlands",
+        description:
+          "Discreetly situated a unique two storey period home enviably located on the corner of Krom Road and Recht Road offering seclusion and privacy. The house features a magnificent double height reception room with doors leading directly out onto a charming courtyard garden.",
+        price: 259500,
+        photo: "534182",
+      },
+    ]);
+  }
   return (
     <>
       <div className="text-center mt-5">
         <h5 className="fs-3">Case attualmente disponibili</h5>
       </div>
-      <table class="table table-hover mt-5">
+      <table className="table table-hover mt-5">
         <thead>
           <tr>
             <th scope="col">Indirizzo</th>
@@ -15,9 +45,14 @@ export default function HouseList() {
           </tr>
         </thead>
         <tbody>
-            <HouseRow />
+          {houses.map((h) => (
+            <HouseRow key={h.id} house={h} />
+          ))}
         </tbody>
       </table>
+      <button className="btn btn-primary" onClick={addHouse}>
+        Aggiungi casa
+      </button>
     </>
   );
 }
