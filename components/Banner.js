@@ -1,17 +1,24 @@
 import Image from "next/image";
-import styles from "../styles/Banner.module.css"
+import styles from "../styles/Banner.module.css";
 
-export default function Banner() {
-    return (
-        <>
-            <div className="row">
-                <div className="col-5">
-                    <Image src={"/GloboLogo.png"} alt="GloboLogo" width={"300"} height={"150"} />
-                </div>
-                <div className="col-7 d-flex align-items-center">
-                    <h2 className={`fs-3 fw-bold ${styles.coloured}`}>Consegnando case in tutto il mondo</h2>
-                </div>
-            </div>
-        </>
-    );
+export default function Banner(props) {
+  return (
+    <>
+      <div className="row">
+        <div className="col-6">
+          <Image
+            src={"/GloboLogo.png"}
+            alt="GloboLogo"
+            width={"400"}
+            height={"250"}
+          />
+        </div>
+        <div className="col-6 d-flex align-items-center">
+          <h2 className={`fs-2 fw-bold fst-italic ${styles.coloured}`}>
+            {props.headerText}
+          </h2>
+        </div>
+      </div>
+    </>
+  );
 }
