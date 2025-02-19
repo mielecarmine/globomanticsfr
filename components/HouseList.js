@@ -7,14 +7,14 @@ const housesArray = [
 
 
 
-export default function HouseList() {
+export default function HouseList({ setSelectedHouse }) {
   const [houses, setHouses] = useState(housesArray);
   
   useEffect(() => {
-    fetch('/houses.json') // il percorso relativo al file JSON nella cartella `public`
-      .then((response) => response.json()) // converte la risposta in formato JSON
-      .then((data) => setHouses(data)) // imposta i dati nel nostro array di oggetti
-      .catch((error) => console.error('Errore nel caricare i dati:', error)); // gestisce eventuali errori
+    fetch('/houses.json') 
+      .then((response) => response.json()) 
+      .then((data) => setHouses(data)) 
+      .catch((error) => console.error('Errore nel caricare i dati:', error)); 
   }, []);
 
   function addHouse() {
@@ -46,11 +46,11 @@ export default function HouseList() {
         </thead>
         <tbody>
           {houses.map((h) => (
-            <HouseRow key={h.id} house={h} />
+            <HouseRow key={h.id} house={h} setSelectedHouse={setSelectedHouse}/>
           ))}
         </tbody>
       </table>
-      <button className="btn btn-primary" onClick={addHouse}>
+      <button className="btn btn-primary mt-3" onClick={addHouse}>
         Aggiungi casa
       </button>
     </>
